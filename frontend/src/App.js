@@ -1,26 +1,19 @@
+import React, {useState, useMemo} from 'react'
 import styled from "styled-components";
-import bg from './img/bg.png';
-import { MainLayout } from "./styles/Layouts";
-import Orb from "./Components/Orb/Orb";
-import Navigation from "./Components/Navigation/Navigation";
-import React, { useMemo, useState } from "react";
-import Dashboard from "./Components/Dashboard/Dashboard";
-import Income from "./Components/Incomes/Income";
-import Expenses from "./Components/Expenses/Expenses";
-import { useGlobalContext } from "./context/GlobalContext";
-
+import bg from './img/bg.png'
+import {MainLayout} from './styles/Layouts'
+import Orb from './Components/Orb/Orb'
+import Navigation from './Components/Navigation/Navigation'
+import Dashboard from './Components/Dashboard/Dashboard';
+import Income from './Components/Income/Income'
+import Expenses from './Components/Expenses/Expenses';
+import { useGlobalContext } from './context/GlobalContext';
 
 function App() {
+  const [active, setActive] = useState(1)
 
-  const [active, setActive] = useState('1');
-
-  const global = useGlobalContext();
+  const global = useGlobalContext()
   console.log(global);
-
-
-  const orbMemo = useMemo(() => {
-    return <Orb />
-  },[])
 
   const displayData = () => {
     switch(active){
@@ -37,11 +30,15 @@ function App() {
     }
   }
 
+  const orbMemo = useMemo(() => {
+    return <Orb />
+  },[])
+
   return (
-    <AppStyled bg = {bg} className="App">
+    <AppStyled bg={bg} className="App">
       {orbMemo}
       <MainLayout>
-        <Navigation active={active} setActive={setActive}/>
+        <Navigation active={active} setActive={setActive} />
         <main>
           {displayData()}
         </main>
@@ -52,7 +49,7 @@ function App() {
 
 const AppStyled = styled.div`
   height: 100vh;
-  background-image: url(${props => props.bg}); 
+  background-image: url(${props => props.bg});
   position: relative;
   main{
     flex: 1;
@@ -65,9 +62,6 @@ const AppStyled = styled.div`
       width: 0;
     }
   }
-
 `;
-
-
 
 export default App;
