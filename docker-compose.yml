@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  exptrack-frontend:
+    image: gatsy1227/front1:latest
+    container_name: exptrack-frontend
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      exptrack:
+        ipv4_address: 172.16.1.6
+
+  exptrack-backend:
+    image: gatsy1227/back1:latest
+    container_name: exptrack-backend
+    ports:
+      - "5000:5000"
+    networks:
+      exptrack:
+        ipv4_address: 172.16.1.7
+
+networks:
+  exptrack:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.1.0/24
