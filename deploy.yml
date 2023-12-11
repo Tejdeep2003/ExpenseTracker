@@ -1,0 +1,46 @@
+# deploy.yml
+---
+- name: Deploy Application Locally
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Copy Docker Compose file from host machine to remote host
+      ansible.builtin.copy:
+        src: ./docker-compose.yml
+        dest: ./
+        remote_src: yes
+      tags:
+        - copy_files
+
+    - name: Pull the docker images specified in docker-compose
+      command: docker-compose pull
+
+    - name: Run the pulled docker images in detached mode
+      command: docker-compose up -d
+
+    - name: Prune the dangling docker images
+      command: docker image prune --force
+      
+    - name: Wait for containers to start
+      ansible.builtin.wait_for:
+        host: localhost
+        port: 5000  # Adjust to the actual port of your backend
+        timeout: 60  # Adjust timeout as needed
+      tags:
+        - check_application
+
+    - name: Check if application is working
+      ansible.builtin.uri:
+        url: "http://localhost:3000"  # Adjust to the actual URL of your frontend
+        return_content: yes
+      register: result
+      tags:
+        - check_application
+
+    - name: Fail if application is not working
+      ansible.builtin.fail:
+        msg: "Application check failed. Status code: {{ result.status }}"
+      when: result.status != 200
+      tags:
+        - check_application
