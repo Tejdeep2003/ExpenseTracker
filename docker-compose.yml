@@ -1,6 +1,19 @@
 version: '3.3'
 
 services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpassword
+      MONGO_INITDB_DATABASE: mydatabase
+    ports:
+      - "27017:27017"  # Expose MongoDB port
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - exptrack
   exptrack-frontend:
     image: gatsy1227/front1:latest
     container_name: exptrack-frontend
@@ -9,7 +22,7 @@ services:
       - "3000:3000"
     networks:
       exptrack:
-        ipv4_address: 172.16.1.6
+        ipv4_address: 172.18.1.6
 
   exptrack-backend:
     image: gatsy1227/back1:latest
@@ -18,11 +31,14 @@ services:
       - "5000:5000"
     networks:
       exptrack:
-        ipv4_address: 172.16.1.7
+        ipv4_address: 172.18.1.7
+volumes:
+  mongo_data:
+    driver: local
 
 networks:
   exptrack:
     ipam:
       driver: default
       config:
-        - subnet: 172.16.1.0/24
+        - subnet: 172.18.1.0/24
