@@ -16,7 +16,7 @@
       command: docker-compose pull
 
     - name: Run the pulled docker images in detached mode
-      command: docker-compose up -d
+      command: docker-compose up --build -d
 
     - name: Prune the dangling docker images
       command: docker image prune --force
