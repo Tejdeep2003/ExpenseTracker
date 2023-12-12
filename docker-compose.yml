@@ -2,41 +2,72 @@ version: '3.3'
 
 services:
   mongodb:
+    container_name: mongo_service
+    restart: always
     image: mongo:latest
-    container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: adminpassword
-      MONGO_INITDB_DATABASE: mydatabase
     ports:
       - "27017:27017"  # Expose MongoDB port
     volumes:
       - mongo_data:/data/db
     networks:
       - exptrack
-  exptrack-frontend:
-    image: gatsy1227/front1:latest
-    container_name: exptrack-frontend
+
+  mongodb-tools:
+    container_name: mongo_tools
+    image: ubuntu:20.04
+    command: bash -c "apt-get update && apt-get install -y mongodb-clients && tail -f /dev/null"
+    networks:
+      - exptrack
+    depends_on:
+      - mongodb
+      
+  exptrack-backend:
+    build:
+      dockerfile: Dockerfile 
+      context: ./backend/
+    container_name: exptrack-backend
+    restart: always
+    image: gatsy1227/back1:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpassword
     stdin_open: true
     ports:
-      - "3000:3000"
+      - "5000:5000"
+    depends_on:
+      - mongodb
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/backend
+      - /backend/node_modules
     networks:
       - exptrack
 
-  exptrack-backend:
-    image: gatsy1227/back1:latest
-    container_name: exptrack-backend
+  exptrack-frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend/
+    container_name: exptrack-frontend
+    restart: always
+    image: gatsy1227/front1:latest
     ports:
-      - "5000:5000"
+      - "3000:3000"
+    volumes:
+      - ./frontend:/frontend
+      - ./frontend/node_modules
     networks:
       - exptrack
+    depends_on:
+      - exptrack-backend
+
 volumes:
   mongo_data:
     driver: local
 
 networks:
   exptrack:
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.16.1.0/24
+    driver: bridge
