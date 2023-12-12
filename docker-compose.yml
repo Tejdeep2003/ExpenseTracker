@@ -21,8 +21,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      exptrack:
-        ipv4_address: 172.18.1.6
+      - exptrack
 
   exptrack-backend:
     image: gatsy1227/back1:latest
@@ -30,8 +29,7 @@ services:
     ports:
       - "5000:5000"
     networks:
-      exptrack:
-        ipv4_address: 172.18.1.7
+      - exptrack
 volumes:
   mongo_data:
     driver: local
@@ -41,4 +39,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.18.1.0/24
+        - subnet: 172.16.1.0/24
