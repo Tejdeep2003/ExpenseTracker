@@ -32,9 +32,12 @@ function Orb() {
         animation: ${moveOrb} 15s alternate linear infinite;
     `;
 
+    // return (
+    //     <OrbStyled></OrbStyled>
+    // )
     return (
-        <OrbStyled></OrbStyled>
-    )
+        <OrbStyled data-testid="orb-component"></OrbStyled>
+    );
 }
 
 export default Orb

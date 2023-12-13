@@ -21,6 +21,7 @@ function Navigation({active, setActive}) {
                         key={item.id}
                         onClick={() => setActive(item.id)}
                         className={active === item.id ? 'active': ''}
+                        data-testid={`menu-item-${item.id}`}
                     >
                         {item.icon}
                         <span>{item.title}</span>

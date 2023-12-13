@@ -82,6 +82,7 @@ function IncomeItem({
                     </div>
                     <div className="btn-con">
                         <Button 
+                            data-testid = "delete-button"
                             icon={trash}
                             bPad={'1rem'}
                             bRad={'50%'}
