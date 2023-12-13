@@ -12,18 +12,6 @@ const db = async () => {
             }
         });
         console.log('Db Connected')
-        // Check if the Expense collection exists, and create it if not
-        // const collections = await mongoose.connection.db.listCollections().toArray();
-        // const expenseCollectionExists = collections.some(collection => collection.name === 'expenses');
-
-        // if (!expenseCollectionExists) {
-        //     await mongoose.connection.createCollection('expenses');
-        //     console.log('Expense collection created');
-        // }
-        // else
-        // {
-        //     console.log('Expense collection already created');
-        // }
     } catch (error) {
         console.log('DB Connection Error:', error);
     }

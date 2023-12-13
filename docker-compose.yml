@@ -15,14 +15,14 @@ services:
     networks:
       - exptrack
 
-  mongodb-tools:
-    container_name: mongo_tools
-    image: ubuntu:20.04
-    command: bash -c "apt-get update && apt-get install -y mongodb-clients && tail -f /dev/null"
-    networks:
-      - exptrack
-    depends_on:
-      - mongodb
+  # mongodb-tools:
+  #   container_name: mongo_tools
+  #   image: ubuntu:20.04
+  #   command: bash -c "apt-get update && apt-get install -y mongodb-clients && tail -f /dev/null"
+  #   networks:
+  #     - exptrack
+  #   depends_on:
+  #     - mongodb
       
   exptrack-backend:
     build:
@@ -44,6 +44,7 @@ services:
     volumes:
       - ./backend:/backend
       - /backend/node_modules
+      - ./logs:/app/logs
     networks:
       - exptrack
 
@@ -63,6 +64,54 @@ services:
       - exptrack
     depends_on:
       - exptrack-backend
+  
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    hostname: elasticsearch
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xmx512m -Xms512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - exptrack
+
+  logstash:
+    container_name: logstash
+    image: docker.elastic.co/logstash/logstash:7.15.0
+    ports:
+      - "5044:5044"
+    volumes:
+      - ./logs/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - exptrack
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.15.0
+    ports:
+      - "5601:5601"
+    networks:
+      - exptrack
+    depends_on:
+      - elasticsearch
 
 volumes:
   mongo_data:
