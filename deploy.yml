@@ -1,7 +1,7 @@
 # deploy.yml
 ---
 - name: Deploy Application Locally
-  hosts: all
+  hosts: localhost
 
   tasks:
     - name: Copy Docker Compose file from host machine to local host
@@ -11,8 +11,6 @@
         remote_src: yes
       tags:
         - copy_files
-      when:
-        - "'localhost' in inventory_hostname"
 
     # - name: Copy Docker Compose file from host machine to remote host
     #   ansible.builtin.copy:

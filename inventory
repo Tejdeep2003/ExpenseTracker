@@ -1,13 +1,1 @@
-all:
-  hosts:
-    localhost:
-      ansible_user: ashish
-  # children:
-  #   windows:
-  #     hosts:
-  #       windows_host:
-  #         ansible_host: 192.168.29.87
-  #         ansible_user: DELL
-  #         ansible_password : Soumika1205
-  #         ansible_connection : ssh
-  #         ansible_remote_temp: C:\Users\DELL\Desktop
+localhost ansible_user : ashish
