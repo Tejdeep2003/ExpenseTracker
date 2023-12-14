@@ -39,8 +39,8 @@ services:
       - "5000:5000"
     depends_on:
       - mongodb
-    env_file:
-      - ./backend/.env
+    # env_file:
+    #   - ./backend/.env
     volumes:
       - ./backend:/backend
       - ./logs:/app/logs
