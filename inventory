@@ -1,1 +1,1 @@
-172.16.1.1 ansible_user : ashish
+172.16.1.1 ansible_user=ashish
