@@ -95,7 +95,7 @@ services:
     ports:
       - "5044:5044"
     volumes:
-      - ./logs/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - /home/ashish/Desktop/sem-7/SPE/projects/ExpenseTracker/logs/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     networks:
       - exptrack
     depends_on:
