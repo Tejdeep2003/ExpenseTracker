@@ -14,15 +14,15 @@
       when:
         - "'localhost' in inventory_hostname"
 
-    - name: Copy Docker Compose file from host machine to remote host
-      ansible.builtin.copy:
-        src: ./docker-compose.yml
-        dest: ./
-        remote_src: yes
-      tags:
-        - copy_files
-      when:
-        - "'windows' in group_names"
+    # - name: Copy Docker Compose file from host machine to remote host
+    #   ansible.builtin.copy:
+    #     src: ./docker-compose.yml
+    #     dest: ./
+    #     remote_src: yes
+    #   tags:
+    #     - copy_files
+    #   when:
+    #     - "'windows' in group_names"
 
     - name: Pull the docker images specified in docker-compose
       command: docker-compose pull
