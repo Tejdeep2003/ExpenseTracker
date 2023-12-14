@@ -25,9 +25,9 @@ services:
   #     - mongodb
       
   exptrack-backend:
-    build:
-      dockerfile: Dockerfile 
-      context: ./backend/
+    # build:
+    #   dockerfile: Dockerfile 
+    #   context: ./backend/
     container_name: exptrack-backend
     restart: always
     image: gatsy1227/back1:latest
@@ -48,9 +48,9 @@ services:
       - exptrack
 
   exptrack-frontend:
-    build:
-      dockerfile: Dockerfile
-      context: ./frontend/
+    # build:
+    #   dockerfile: Dockerfile
+    #   context: ./frontend/
     container_name: exptrack-frontend
     restart: always
     image: gatsy1227/front1:latest
