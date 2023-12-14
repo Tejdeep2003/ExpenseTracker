@@ -8,3 +8,7 @@ all:
         windows_host:
           ansible_host: 192.168.29.87
           ansible_user: DELL
+          ansible_password : Soumika1205
+          ansible_connection : winrm
+          ansible_winrm_transport : basic
+          
