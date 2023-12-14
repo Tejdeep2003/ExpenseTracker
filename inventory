@@ -1,3 +1,9 @@
-localhost ansible_user : ashish
-[windows]
-windows_host ansible_host : 192.168.29.87 ansible_user : DELL ansible_password : Soumika1205 ansible_port : 5986 ansible_connection : winrm ansible_winrm_transport : basic
+localhost:
+  ansible_user: ashish
+
+windows:
+  windows_host:
+    ansible_host: 192.168.29.87
+    ansible_user: DELL
+    ansible_connection : winrm
+    ansible_winrm_transport : basic
