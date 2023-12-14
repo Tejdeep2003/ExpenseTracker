@@ -11,4 +11,5 @@ all:
           ansible_password : Soumika1205
           ansible_connection : winrm
           ansible_winrm_transport : basic
-          
+          ansible_winrm_basic_auth_timeout : 120
+          ansible_winrm_basic_auth_retries : 3
