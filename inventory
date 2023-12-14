@@ -10,3 +10,4 @@ all:
           ansible_user: DELL
           ansible_password : Soumika1205
           ansible_connection : ssh
+          ansible_remote_temp: C:\Users\DELL\Desktop
