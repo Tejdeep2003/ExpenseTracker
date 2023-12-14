@@ -6,7 +6,7 @@
   tasks:
     - name: Copy Docker Compose file from host machine to local host
       ansible.builtin.copy:
-        src: ./docker-compose.yml
+        src: /home/ashish/Desktop/sem-7/SPE/projects/ExpenseTracker/docker-compose.yml
         dest: ./
         remote_src: yes
       tags:
