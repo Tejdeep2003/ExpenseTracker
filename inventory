@@ -1,1 +1,1 @@
-172.16.1.1 ansible_user=ashish
+localhost ansible_user : ashish
